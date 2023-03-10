@@ -15,7 +15,7 @@ namespace MenuPlanner
                 {
                     return false;
                 }
-                result = result * 10 + (c - '0');
+                result = result * 10 + c;
                 index++;
             }
             return true;
