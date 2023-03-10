@@ -1,11 +1,9 @@
-using System;
-using System.Reflection;
+using System.Text;
 
 namespace MenuPlanner
 {
-    class Program
+    internal class Program
     {
-
         static bool TryParseInt(string input, out int result)
         {
             result = 0;
@@ -24,49 +22,54 @@ namespace MenuPlanner
         }
         static void Main(string[] args)
         {
-           
-            string[] cuisineStyles = {"Італійська", "Французька" };
+            Console.OutputEncoding = Encoding.UTF8;
+
+            string[] cuisineStyles = { "Українська", "Французька", "Італійська", "Мексиканська" };
             string[][] menuItems = new string[][] {
-            new string[] { "Солянка" ,  "Каша", "Kруасан" },
-            new string[] {"Харчо",  "Мівіна", "Хліб"}
+            new string[] { "Борщ \nСолянка" ,  "Вареники \nГолубці", "Медовик \nНалисники" },
+            new string[] { "Цибулевий суп \nРибний бульйон",  "Рататуй", "Профітролі \nКруасани"},
+            new string[] { "Мінестроне \nРізотто", "Лазанья \nОсьминог гриль", "Тірамісу \nПанакота" },
+            new string[] { "Гуакамоле \nЧілі-кон-карне", "Такос \nЕнчілада", "Флаворес \nЧуррос" }
             };
-            string[] seasons = { "Весна", "Літо" };
+            string[] seasons = { "Весна", "Літо", "Осінь", "Зима" };
             string[][] seasonalItems = new string[][] {
-            new string[] {"Суп", "курка", "тірамісу" },
-            new string[] {"Борщ", "риба", "торт" }
+            new string[] { "Крем-суп з грибів", "Гречка зі шпинатом", "Кекс з полуницею" },
+            new string[] { "Газпачо", "Стейк з лосося з гарніром з овочів", "Фруктове морозиво" },
+            new string[] { "Крем-суп з гарбуза", "Штрудель з качиного м'яса", "Яблучний пиріг з морозивом" },
+            new string[] {"Капусняк", "Запечена курка з овочами", "Смажений пиріг з яблуками та корицею" }
             };
 
-            string[] weekDays = { "Перші страви", "Другі страви", "Десерт"};
+            string[] ClassificationDishes = { "Перші страви", "Другі страви", "Десерт" };
 
             int cuisineIndex = 0;
             int seasonIndex = 0;
 
-            string[] veganMenu = { "Салат зі свіжих овочів", "Вегетаріанська піца", "Каша з кокосовим молоком"};
+            string[] veganMenu = { "Салат зі свіжих овочів", "Вегетаріанська піца", "Каша з кокосовим молоком" };
 
             bool validInput = false;
-           
-            Console.Write("Ви веган? (Так - 1/Ні - 2): ");
+
+            Console.Write("   Ви веган? (Так - 1/Ні - 2): ");
             string veganAnswer = Console.ReadLine();
 
             if (veganAnswer == "1")
             {
-                Console.WriteLine("Меню для веганів:");
+                Console.WriteLine("   Меню для веганів:");
                 for (int i = 0; i < veganMenu.Length; i++)
                 {
                     Console.WriteLine(veganMenu[i]);
                 }
             }
             else if (veganAnswer == "2")
-            { 
+            {
 
                 while (!validInput)
                 {
-                    Console.WriteLine("стиль кухні:");
+                    Console.WriteLine("   Стиль кухні:");
                     for (int i = 0; i < cuisineStyles.Length; i++)
                     {
                         Console.WriteLine($"{i + 1}. {cuisineStyles[i]}");
                     }
-                    Console.Write("\nОберіть стиль кухні номер: ");
+                    Console.Write("\n   Оберіть стиль кухні номер: ");
                     string cuisineInput = Console.ReadLine();
 
                     if (TryParseInt(cuisineInput, out cuisineIndex) && cuisineIndex >= 1 && cuisineIndex <= cuisineStyles.Length)
@@ -83,12 +86,12 @@ namespace MenuPlanner
 
                 while (!validInput)
                 {
-                    Console.WriteLine("\nВиберіть сезон:");
+                    Console.WriteLine("\n   Виберіть сезон:");
                     for (int i = 0; i < seasons.Length; i++)
                     {
                         Console.WriteLine($"{i + 1}. {seasons[i]}");
                     }
-                    Console.Write("\nОберіть сезон номер: ");
+                    Console.Write("\n   Оберіть сезон номер: ");
                     string seasonInput = Console.ReadLine();
 
                     if (TryParseInt(seasonInput, out seasonIndex) && seasonIndex >= 1 && seasonIndex <= seasons.Length)
@@ -101,13 +104,13 @@ namespace MenuPlanner
                     }
                 }
 
-                Console.WriteLine($"\nСписок страв за стилем '{cuisineStyles[cuisineIndex - 1]}' та сезоном '{seasons[seasonIndex - 1]}'");
+                Console.WriteLine($"\n   Список страв за стилем '{cuisineStyles[cuisineIndex - 1]}' та сезоном '{seasons[seasonIndex - 1]}'");
 
 
 
                 for (int i = 0; (i < seasonalItems[seasonIndex - 1].Length && i < menuItems[cuisineIndex - 1].Length); i++)
                 {
-                    Console.WriteLine($"{weekDays[i]}:");
+                    Console.WriteLine($"{ClassificationDishes[i]}:");
                     Console.WriteLine(seasonalItems[seasonIndex - 1][i]);
                     Console.WriteLine(menuItems[cuisineIndex - 1][i]);
 
@@ -122,21 +125,21 @@ namespace MenuPlanner
 
             string[] drinks = { "Алкогольні", "Безалкогольні" };
             string[][] drinkItems = new string[][] {
-    new string[] {"Вино", "Вермут", "Граппа"},
-    new string[] {"Лимонад", "Сік", "Чай"}
-};
+            new string[] {"Вино", "Вермут", "Граппа", "Пиво", "Шампанське", "Водка"},
+            new string[] {"Лимонад", "Сік", "Чай", "Кава", "Мохіто", "Кола"}
+            };
 
             int drinkIndex = 0;
             validInput = false;
 
             while (!validInput)
             {
-                Console.WriteLine("\nВиберіть напій:");
+                Console.WriteLine("\n   Виберіть напій:");
                 for (int i = 0; i < drinks.Length; i++)
                 {
                     Console.WriteLine($"{i + 1}. {drinks[i]}");
                 }
-                Console.Write("\nОберіть напій номер: ");
+                Console.Write("\n   Оберіть напій номер: ");
                 string drinkInput = Console.ReadLine();
 
                 if (TryParseInt(drinkInput, out drinkIndex) && drinkIndex >= 1 && drinkIndex <= drinks.Length)
@@ -149,12 +152,14 @@ namespace MenuPlanner
                 }
             }
 
-
+            Console.WriteLine($"\n   Список напоїв:");
             switch (drinkIndex)
             {
+
                 case 1:
                     for (int i = 0; i < drinkItems[0].Length; i++)
                     {
+                        
                         Console.WriteLine(drinkItems[0][i]);
                     }
                     break;
@@ -169,9 +174,5 @@ namespace MenuPlanner
 
             Console.ReadLine();
         }
-
     }
-
 }
-
-
